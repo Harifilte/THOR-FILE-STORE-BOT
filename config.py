@@ -1,50 +1,61 @@
-import os
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 
-#Bot token @Botfather
+# Bot token @Botfather
 TG_BOT_TOKEN = os.environ.get("5775270763:AAGhMhC3zM2Dpr6iDr2rIwNcT-JU_MnPswU", "")
 
-#Your API ID from my.telegram.org
+# Your API ID from my.telegram.org
 APP_ID = int(os.environ.get("10261086", ""))
 
-#Your API Hash from my.telegram.org
+# Your API Hash from my.telegram.org
 API_HASH = os.environ.get("9195dc0591fbdb22b5711bcd1f437dab", "")
 
-#Your db channel Id
+# Your db channel Id
 CHANNEL_ID = int(os.environ.get("-1001892644922", ""))
 
-#OWNER ID
+# OWNER ID
 OWNER_ID = int(os.environ.get("1426588906", ""))
 
-#Database 
-DB_URI = os.environ.get("mongodb+srv://hbbot:hbbot@cluster0.byhu9r2.mongodb.net/?retryWrites=true&w=majority", "")
+# Database
+DB_URI = os.environ.get(
+    "mongodb+srv://hbbot:hbbot@cluster0.byhu9r2.mongodb.net/?retryWrites=true&w=majority",
+    "",
+)
 
-#force sub channel id, if you want enable force sub
+# force sub channel id, if you want enable force sub
 FORCE_SUB_CHANNEL = int(os.environ.get("-1001586143133", ""))
 
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
-#start message
-START_MSG = os.environ.get("START_MESSAGE", "Hello {first}\n\nI can store private files in Specified Channel and other users can access it from special link.")
+# start message
+START_MSG = os.environ.get(
+    "START_MESSAGE",
+    "Hello {first}\n\nI can store private files in Specified Channel and other users can access it from special link.",
+)
 try:
-    ADMINS=[]
-    for x in (os.environ.get("ADMINS", "").split()):
+    ADMINS = []
+    for x in os.environ.get("ADMINS", "").split():
         ADMINS.append(int(x))
 except ValueError:
-        raise Exception("Your Admins list does not contain valid integers.")
+    raise Exception("Your Admins list does not contain valid integers.")
 
-#Force sub message 
-FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "Hello {first}\n\n<b>You need to join in my Channel/Group to use me\n\nKindly Please join Channel</b>")
+# Force sub message
+FORCE_MSG = os.environ.get(
+    "FORCE_SUB_MESSAGE",
+    "Hello {first}\n\n<b>You need to join in my Channel/Group to use me\n\nKindly Please join Channel</b>",
+)
 
-#set your Custom Caption here, Keep None for Disable Custom Caption
+# set your Custom Caption here, Keep None for Disable Custom Caption
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", None)
 
-#set True if you want to prevent users from forwarding files from bot
-PROTECT_CONTENT = True if os.environ.get('PROTECT_CONTENT', "False") == "True" else False
+# set True if you want to prevent users from forwarding files from bot
+PROTECT_CONTENT = (
+    True if os.environ.get("PROTECT_CONTENT", "False") == "True" else False
+)
 
-#Set true if you want Disable your Channel Posts Share button
-if os.environ.get("DISABLE_CHANNEL_BUTTON", None) == 'True':
+# Set true if you want Disable your Channel Posts Share button
+if os.environ.get("DISABLE_CHANNEL_BUTTON", None) == "True":
     DISABLE_CHANNEL_BUTTON = True
 else:
     DISABLE_CHANNEL_BUTTON = False
@@ -60,15 +71,11 @@ LOG_FILE_NAME = "filesharingbot.txt"
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
-    datefmt='%d-%b-%y %H:%M:%S',
+    datefmt="%d-%b-%y %H:%M:%S",
     handlers=[
-        RotatingFileHandler(
-            LOG_FILE_NAME,
-            maxBytes=50000000,
-            backupCount=10
-        ),
-        logging.StreamHandler()
-    ]
+        RotatingFileHandler(LOG_FILE_NAME, maxBytes=50000000, backupCount=10),
+        logging.StreamHandler(),
+    ],
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
